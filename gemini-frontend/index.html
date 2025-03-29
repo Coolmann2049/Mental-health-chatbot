@@ -3,33 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Analysis Chatbot</title>
+    <title>Mental Health Chatbot</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Mental Health Support</h1>
-            <p>Share your thoughts and get a brief analysis.</p>
-        </header>
-
-        <main>
-            <div class="input-section">
-                <label for="user-text" class="input-label">How are you feeling today?</label>
-                <textarea id="user-text" class="input-textarea" rows="7" placeholder="Describe your thoughts and feelings here..."></textarea>
-                <button id="analyze-button" class="primary-button">Analyze My Feelings</button>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Mental Health Support Chat</h1>
+        </div>
+        <div id="chat-messages" class="chat-messages">
             </div>
-
-            <div id="response-section" class="response-section" style="display: none;">
-                <h2>Analysis:</h2>
-                <pre id="analysis-result" class="analysis-text"></pre>
-                <p class="disclaimer">Please remember this is an AI and not a substitute for professional mental health care. If you are in distress, please seek help from a qualified professional.</p>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2025 Mental Health Support Bot</p>
-        </footer>
+        <div class="chat-input-area">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
     </div>
 
     <script src="script.js"></script>

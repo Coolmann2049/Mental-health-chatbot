@@ -9,6 +9,7 @@ const {
 } = require("@google/generative-ai");
 const fs = require("node:fs");
 const mime = require("mime-types");
+const { v4: uuidv4 } = require('uuid'); // For generating unique session IDs
 
 const app = express();
 const port = 3000;
@@ -33,40 +34,46 @@ const generationConfig = {
     responseMimeType: "text/plain",
 };
 
-app.post('/api/mental-health-analysis', async (req, res) => {
-    const { userText } = req.body;
+// In-memory storage for chat sessions and history
+const chatSessions = {};
 
-    if (!userText) {
-        return res.status(400).json({ error: 'Please provide text for analysis.' });
+// Endpoint to start a new chat session
+app.post('/api/start-chat', async (req, res) => {
+    const sessionId = uuidv4(); // Generate a unique session ID
+    chatSessions[sessionId] = []; // Initialize an empty message history for this session
+    res.json({ sessionId });
+});
+
+app.post('/api/chat', async (req, res) => {
+    const { sessionId, message } = req.body;
+
+    if (!sessionId || !message) {
+        return res.status(400).json({ error: 'Session ID and message are required.' });
+    }
+
+    if (!chatSessions[sessionId]) {
+        return res.status(404).json({ error: 'Invalid session ID.' });
     }
 
     try {
+        const chatHistory = chatSessions[sessionId];
         const chatSession = model.startChat({
             generationConfig,
-            history: [
-                {
-                    role: "user",
-                    parts: [
-                        { text: "Instructions:\n\n1. Carefully analyze the user input to identify the user's sentiments and needs.\n2. Based on the identified sentiments and needs, provide tailored support, coping strategies, and resources.\n3. If the user's situation is beyond your scope, guide them to seek professional help from a qualified therapist or counselor.  Provide specific resources and contact information if possible.\n4. Be mindful of the user's background and potential barriers they might face in accessing mental health care.\n5. Always maintain a supportive and empathetic tone.  Encourage the user to share their feelings and seek help when needed. \n" },
-                    ],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        { text: "Okay, thank you for outlining these important instructions. I understand my role clearly.\n\nI will act as a supportive mental health activist, focusing on:\n\n1.  **Active Listening & Analysis:** Carefully paying attention to what users share to understand their feelings (sentiments) and what they might need (needs).\n2.  **Tailored Support:** Providing personalized encouragement, relevant coping strategies, and helpful information based on their specific situation.\n3.  **Resource Provision (India-Specific):** Offering resources like helplines, organizations, or information relevant to accessing mental health support within India.\n4.  **Ethical Boundaries:** Recognizing when a situation requires professional intervention and gently guiding the user towards seeking help from therapists, counselors, or doctors. I will emphasize that I am *not* a replacement for professional care.\n5.  **Inclusivity & Sensitivity:** Being mindful of diverse backgrounds, experiences, and potential barriers (social, economic, cultural) that individuals, especially those from minority groups in India, might face when dealing with mental health and seeking help.\n6.  **Empathetic & Encouraging Tone:** Maintaining a consistently supportive, non-judgmental, and understanding tone to create a safe space for users to express themselves.\n7.  **Learning & Adaptation:** I will strive to learn from each interaction to improve the relevance and effectiveness of the support I offer.\n\nI am committed to being a helpful first point of contact, offering initial support, and responsibly guiding users towards the right resources when needed.\n\nI'm ready. Please feel free to share whenever you're ready, or let me know how I can help someone today." },
-                    ],
-                },
-            ],
+            history: chatHistory, // Use the chat history for the current session
         });
 
-        const result = await chatSession.sendMessage(userText);
-        const responseText = result.response.text();
+        const result = await chatSession.sendMessage(message);
+        const botResponse = result.response.text();
 
-        res.json({ analysis: responseText });
+        // Add user message and bot response to the chat history
+        chatSessions[sessionId].push({ role: 'user', parts: [{ text: message }] });
+        chatSessions[sessionId].push({ role: 'model', parts: [{ text: botResponse }] });
+
+        res.json({ response: botResponse });
 
     } catch (error) {
         console.error('Error calling Gemini API:', error);
-        res.status(500).json({ error: 'Failed to analyze the text.' });
+        res.status(500).json({ error: 'Failed to process the chat message.' });
     }
 });
 
