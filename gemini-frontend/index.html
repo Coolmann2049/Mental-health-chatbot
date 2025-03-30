@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Chatbot</title>
+    <title>Mental Health Support Chat</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="chat-container">
@@ -12,13 +13,20 @@
             <h1>Mental Health Support Chat</h1>
         </div>
         <div id="chat-messages" class="chat-messages">
-            </div>
+            <!-- Messages will be added here dynamically -->
+        </div>
         <div class="chat-input-area">
-            <input type="text" id="message-input" placeholder="Type your message...">
-            <button id="send-button">Send</button>
+            <input 
+                type="text" 
+                id="message-input" 
+                placeholder="Type your message here..."
+                aria-label="Type your message"
+            >
+            <button id="send-button" aria-label="Send message">
+                Send
+            </button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
