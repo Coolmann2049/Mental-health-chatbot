@@ -52,7 +52,7 @@ function addMessage(role, text) {
 
 async function startChatSession() {
     try {
-        const response = await fetch('https://mentalhealthbackend-three.vercel.app/api', {
+        const response = await fetch('https://mentalhealthbackend-three.vercel.app/api/start-chat/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ async function sendMessage() {
     messageInput.focus();
 
     try {
-        const response = await fetch('http://localhost:3000/api/chat', {
+        const response = await fetch('https://mentalhealthbackend-three.vercel.app/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
