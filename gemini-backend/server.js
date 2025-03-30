@@ -63,6 +63,7 @@ const generationConfig = {
 // In-memory storage for chat sessions and history
 const chatSessions = {};
 
+
 // Endpoint to start a new chat session
 app.post('/api/start-chat', async (req, res) => {
     const sessionId = uuidv4(); // Generate a unique session ID
