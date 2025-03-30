@@ -63,9 +63,8 @@ const generationConfig = {
 // In-memory storage for chat sessions and history
 const chatSessions = {};
 
-
 // Endpoint to start a new chat session
-app.post('/api', async (req, res) => {
+app.post('/api/start-chat', async (req, res) => {
     const sessionId = uuidv4(); // Generate a unique session ID
     chatSessions[sessionId] = []; // Initialize an empty message history for this session
     res.json({ sessionId });
@@ -110,7 +109,7 @@ app.post('/api/chat', async (req, res) => {
         res.status(500).json({ error: 'Failed to process the chat message.' });
     }
 });
-/*
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
-});*/
+});
