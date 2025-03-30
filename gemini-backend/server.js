@@ -110,7 +110,7 @@ app.post('/api/chat', async (req, res) => {
         res.status(500).json({ error: 'Failed to process the chat message.' });
     }
 });
-
+/*
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
-});
+});*/
