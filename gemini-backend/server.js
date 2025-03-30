@@ -65,7 +65,7 @@ const chatSessions = {};
 
 
 // Endpoint to start a new chat session
-app.post('/api/start-chat', async (req, res) => {
+app.post('/api', async (req, res) => {
     const sessionId = uuidv4(); // Generate a unique session ID
     chatSessions[sessionId] = []; // Initialize an empty message history for this session
     res.json({ sessionId });

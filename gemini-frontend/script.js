@@ -52,7 +52,7 @@ function addMessage(role, text) {
 
 async function startChatSession() {
     try {
-        const response = await fetch('https://mentalhealthbackend-three.vercel.app/api/start-chat/', {
+        const response = await fetch('https://mentalhealthbackend-three.vercel.app/api/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
