@@ -8,7 +8,24 @@ function addMessage(role, text) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message');
     messageDiv.classList.add(role === 'user' ? 'user-message' : 'bot-message');
-    messageDiv.textContent = text;
+
+    if (role === 'bot') {
+        // Handle blockquotes ("> ")
+        if (text.startsWith('> ')) {
+            const quoteText = text.substring(2).trim();
+            messageDiv.innerHTML = `<blockquote>${quoteText}</blockquote>`;
+        } else {
+            // Replace **bold text** with <b>bold text</b>
+            text = text.replace(/\*\*(.*?)\*\*/gs, '<b>$1</b>');
+            // Replace *bold text* with <b>bold text</b> (handling single asterisks as well)
+            text = text.replace(/\*(.*?)\*/gs, '<b>$1</b>');
+            // Replace newline characters with <br> tags
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+        }
+    } else {
+        messageDiv.textContent = text;
+    }
+
     chatMessagesDiv.appendChild(messageDiv);
     chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; // Scroll to the latest message
 }
