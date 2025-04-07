@@ -9,5 +9,6 @@ Future Scope:
 1. Web-hosting via vercel or something similar
 2. Speech to text system
 3. Speech emotion understanding and response.
-4. RAG implementation from a dataset with vector word embedding to get domain specific knowledge (already semi-implemented, waiting for mdd-5k dataset to be publically available)
-5. User login and auth system along with a more personalized chatbot.
+4. AI Text to speech
+5. RAG implementation from a dataset with vector word embedding to get domain specific knowledge (already semi-implemented, waiting for mdd-5k dataset to be publically available)
+6. User login and auth system along with a more personalized chatbot.
