@@ -12,3 +12,6 @@ Future Scope:
 4. AI Text to speech
 5. RAG implementation from a dataset with vector word embedding to get domain specific knowledge (already semi-implemented, waiting for mdd-5k dataset to be publically available)
 6. User login and auth system along with a more personalized chatbot.
+
+   
+![image](https://github.com/user-attachments/assets/355e36d6-4225-4256-87d9-bc2c8a8f5987)
