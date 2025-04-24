@@ -110,6 +110,9 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.send('Hello, this is your Express server!');
+});
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
