@@ -52,7 +52,7 @@ function addMessage(role, text) {
 
 async function startChatSession() {
     try {
-        const response = await fetch('http://localhost:3000/api/start-chat', {
+        const response = await fetch('https://mental-health-chatbot-n40m.onrender.com//api/start-chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ async function sendMessage() {
     messageInput.focus();
 
     try {
-        const response = await fetch('http://localhost:3000/api/chat', {
+        const response = await fetch('https://mental-health-chatbot-n40m.onrender.com//api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
